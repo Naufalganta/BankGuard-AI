@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100">
+
+    <!-- Navbar -->
+    <nav class="bg-slate-900 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+            <div>
+                <h1 class="text-2xl font-bold">
+                    🛡️ BankGuard AI
+                </h1>
+                <p class="text-sm text-slate-300">
+                    LLM Banking Security Analyzer
+                </p>
+            </div>
+
+            <div class="flex items-center gap-3">
+
+                <a
+                    href="/history/"
+                    class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg">
+
+                    📋 History
+
+                </a>
+
+                <span class="bg-green-600 px-3 py-1 rounded-full text-sm">
+
+                    System Online
+
+                </span>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Container -->
+    <div class="max-w-6xl mx-auto mt-10">
+
+        <!-- Dashboard Statistics -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+
+            <div class="bg-white rounded-xl shadow p-6 text-center">
+                <h2 class="text-gray-500 text-sm">Total Scan</h2>
+                <p class="text-4xl font-bold text-blue-600">
+                    {{ stats.total }}
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-6 text-center">
+                <h2 class="text-gray-500 text-sm">Threat</h2>
+                <p class="text-4xl font-bold text-orange-500">
+                    {{ stats.threat }}
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-6 text-center">
+                <h2 class="text-gray-500 text-sm">High Risk</h2>
+                <p class="text-4xl font-bold text-red-500">
+                    {{ stats.high }}
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-6 text-center">
+                <h2 class="text-gray-500 text-sm">Critical</h2>
+                <p class="text-4xl font-bold text-red-700">
+                    {{ stats.critical }}
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Upload Card -->
+        <div class="bg-white rounded-xl shadow-lg p-8">
+
+            <h2 class="text-2xl font-bold mb-2">
+                Upload Security Log
+            </h2>
+
+            <p class="text-gray-500 mb-6">
+                Upload file log (.csv, .log, .txt) untuk dianalisis menggunakan Large Language Model.
+            </p>
+
+            <form
+                action="/analyze/upload"
+                method="post"
+                enctype="multipart/form-data">
+
+                <div class="border-2 border-dashed border-gray-300 rounded-xl p-10 text-center">
+
+                    <input
+                        class="block w-full text-sm text-gray-600"
+                        type="file"
+                        name="file"
+                        accept=".csv,.log,.txt"
+                        required>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg">
+
+                    🚀 Upload & Analyze
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="font-bold text-lg">
+                    🔍 Threat Detection
+                </h3>
+
+                <p class="text-gray-500 mt-2">
+                    Mendeteksi aktivitas mencurigakan dari log keamanan.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="font-bold text-lg">
+                    🤖 NVIDIA LLM
+                </h3>
+
+                <p class="text-gray-500 mt-2">
+                    Analisis log menggunakan Large Language Model.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="font-bold text-lg">
+                    📊 Risk Assessment
+                </h3>
+
+                <p class="text-gray-500 mt-2">
+                    Menampilkan tingkat risiko beserta rekomendasi mitigasi.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Hasil Analisis -->
+        <div class="bg-white rounded-xl shadow mt-8 p-8">
+
+            <h2 class="text-2xl font-bold mb-6">
+                Hasil Analisis AI
+            </h2>
+
+            {% if summary %}
+
+            <div class="border rounded-xl p-6 bg-green-50">
+
+                <div class="flex justify-between items-center">
+
+                    <h3 class="text-xl font-bold text-green-700">
+                        📄 {{ filename }}
+                    </h3>
+
+                    <a
+                        href="/analyze/download/{{ filename }}"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+
+                        📄 Download PDF
+
+                    </a>
+
+                </div>
+
+                <div class="mt-4">
+
+                    {% if risk == "CRITICAL" %}
+                    <span class="bg-red-700 text-white px-4 py-2 rounded-full font-bold">
+                        🔥 CRITICAL
+                    </span>
+
+                    {% elif risk == "HIGH" %}
+                    <span class="bg-red-600 text-white px-4 py-2 rounded-full font-bold">
+                        🔴 HIGH
+                    </span>
+
+                    {% elif risk == "MEDIUM" %}
+                    <span class="bg-yellow-500 text-white px-4 py-2 rounded-full font-bold">
+                        🟡 MEDIUM
+                    </span>
+
+                    {% else %}
+                    <span class="bg-green-600 text-white px-4 py-2 rounded-full font-bold">
+                        🟢 LOW
+                    </span>
+                    {% endif %}
+
+                </div>
+
+                <!-- Ringkasan -->
+                <div class="mt-8">
+                    <h4 class="font-bold text-xl mb-2">
+                        📋 Ringkasan
+                    </h4>
+
+                    <p class="text-gray-700">
+                        {{ summary }}
+                    </p>
+                </div>
+
+                <!-- Threat -->
+                <div class="mt-8">
+
+                    <h4 class="font-bold text-xl mb-2">
+                        🚨 Ancaman
+                    </h4>
+
+                    <ul class="list-disc ml-6">
+
+                        {% for item in threat %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+                <!-- Evidence -->
+                <div class="mt-8">
+
+                    <h4 class="font-bold text-xl mb-2">
+                        📝 Bukti
+                    </h4>
+
+                    <ul class="list-disc ml-6">
+
+                        {% for item in evidence %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+                <!-- Recommendation -->
+                <div class="mt-8">
+
+                    <h4 class="font-bold text-xl mb-2">
+                        💡 Rekomendasi
+                    </h4>
+
+                    <ul class="list-disc ml-6">
+
+                        {% for item in recommendation %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            {% else %}
+
+            <div class="bg-slate-100 rounded-lg p-8 text-center text-gray-500">
+
+                Belum ada file yang dianalisis.
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <footer class="mt-16 bg-slate-900 text-white py-6">
+
+        <div class="text-center">
+
+            <p class="font-semibold">
+
+                BankGuard AI
+
+            </p>
+
+            <p class="text-sm text-gray-300">
+
+                LLM Banking Security Analyzer • Powered by NVIDIA Llama 3.3
+
+            </p>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

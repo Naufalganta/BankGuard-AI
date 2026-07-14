@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>History Analisis</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-slate-100">
+
+<nav class="bg-slate-900 text-white p-5">
+
+<div class="max-w-7xl mx-auto flex justify-between">
+
+<h1 class="text-2xl font-bold">
+
+📋 History Analisis
+
+</h1>
+
+<a
+href="/"
+class="bg-blue-600 px-4 py-2 rounded-lg">
+
+Dashboard
+
+</a>
+
+</div>
+
+</nav>
+
+<div class="max-w-7xl mx-auto mt-10">
+
+<div class="bg-white rounded-xl shadow-lg p-8">
+
+<table class="w-full">
+
+<thead>
+
+<tr class="bg-slate-200">
+
+<th class="p-3">ID</th>
+<th class="p-3">Filename</th>
+<th class="p-3">Risk</th>
+<th class="p-3">Tanggal</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for item in history %}
+
+<tr class="border-b">
+
+<td class="p-3">{{ item.id }}</td>
+
+<td class="p-3">{{ item.filename }}</td>
+
+<td class="p-3">{{ item.risk }}</td>
+
+<td class="p-3">{{ item.created_at }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

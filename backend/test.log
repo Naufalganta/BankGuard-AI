@@ -1,0 +1,10 @@
+2026-07-10 08:00:01 INFO User admin login failed from IP 192.168.1.100
+2026-07-10 08:00:05 INFO User admin login failed from IP 192.168.1.100
+2026-07-10 08:00:10 INFO User admin login failed from IP 192.168.1.100
+2026-07-10 08:00:15 WARNING Multiple failed login attempts detected
+2026-07-10 08:00:20 INFO User admin login success from IP 192.168.1.100
+2026-07-10 08:01:05 INFO User staff login success from IP 192.168.1.101
+2026-07-10 08:05:30 ERROR SQL Injection attempt detected from IP 203.12.55.10
+2026-07-10 08:06:15 WARNING Firewall blocked connection from IP 203.12.55.10
+2026-07-10 08:10:50 INFO File access: customer_data.csv
+2026-07-10 08:15:00 INFO User admin logout

@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environment
+venv/
+
+# Environment
+.env
+
+# Database
+*.db
+
+# Upload
+uploads/
+
+# Reports
+reports/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
